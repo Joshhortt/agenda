@@ -1,0 +1,12 @@
+h1 {
+  font-family: 'inherit', sans-serif;
+  position: absolute;
+	top: -20px;
+	width: 100%;
+	font-size: 100px;
+	font-weight: 100;
+	text-align: center;
+  font-style: italic;
+  font-weight: 300;
+  color: #b9b9b9;
+}
