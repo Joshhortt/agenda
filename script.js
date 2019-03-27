@@ -66,3 +66,18 @@ var taskList = {
    this.displayTasks();
   }
 };
+
+// Step 1. Get access to the display tasks button.
+var displayTasksButton = document.getElementById("displayTasksButton");
+var toggleAllButton = document.getElementById("toggleAllButton");
+
+
+// Step 2. Run displayTasks method, when someone clicks the display
+// tasks button.
+displayTasksButton.addEventListener("click", function()  {
+  taskList.displayTasks();
+});
+// Whenever the EventListener is clicked it will run the function.
+toggleAllButton.addEventListener("click", function()  {
+  taskList.toggleAll();
+});
