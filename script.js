@@ -42,42 +42,65 @@ var taskList = {
   toggleAll: function()  {
     var totalTasks = this.tasks.length;
     var completedTasks = 0;
-
-// Get the number of completed tasks.
      for (var i = 0 ; i < totalTasks; i++) {
         if (this.tasks[i].completed === true) {
         }
      }
-
-// Case 1: if everything ´s true, make everything false.
-  if (completedTasks === totalTasks) {
-
+     if (completedTasks === totalTasks) {
 // Make everything "for" false
-  for (var i = 0; i < totalTasks; i++) {
+     for (var i = 0; i < totalTasks; i++) {
         this.tasks[i].completed = false;
     }
-// Case 2: Otherwise "else" make everything true.
    } else  {
      for (var i = 0; i < totalTasks; i++) {
         this.tasks[i].completed = true;
      }
    }
-
    this.displayTasks();
   }
 };
 
-// Step 1. Get access to the display tasks button.
+/*
 var displayTasksButton = document.getElementById("displayTasksButton");
 var toggleAllButton = document.getElementById("toggleAllButton");
 
-
-// Step 2. Run displayTasks method, when someone clicks the display
-// tasks button.
 displayTasksButton.addEventListener("click", function()  {
   taskList.displayTasks();
 });
-// Whenever the EventListener is clicked it will run the function.
+
 toggleAllButton.addEventListener("click", function()  {
   taskList.toggleAll();
 });
+*/
+// Refactoring code to make it more readable
+var handlers = {
+  displayTasks: function()  {
+    taskList.displayTasks();
+  },
+  toggleAll: function()  {
+    taskList.toggleAll();
+  },
+  addTask: function()  {
+    var addTaskTextInput = document.getElementById("addTaskTextInput");
+    taskList.addTask(addTaskTextInput.value);
+    addTaskTextInput.value = "";
+  },
+  changeTask: function()  {
+  var changeTaskPositionInput = document.getElementById("changeTaskPositionInput");
+  var changeTaskTextInput = document.getElementById("changeTaskTextInput");
+  taskList.changeTask(changeTaskPositionInput.valueAsNumber, changeTaskTextInput.value);
+
+    changeTaskPositionInput.value = "";
+    changeTaskTextInput.value = "";
+  },
+  deleteTask: function() {
+    var deleteTaskPositionInput = document.getElementById("deleteTaskPositionInput");
+    taskList.deleteTask(deleteTaskPositionInput.valueAsNumber);
+    deleteTaskPositionInput.value = "";
+  },
+    toggleCompleted: function() {
+    var toggleCompletedPositionInput = document.getElementById("toggleCompletedPositionInput");
+    todoList.toggleCompleted(toggleCompletedPositionInput.valueAsNumber);
+    toggleCompletedPositionInput.value = "";
+  }
+};

@@ -3,14 +3,43 @@
 <html>
 
   <head>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 
   </head>
 
   <body>
     <h1>Agenda</h1>
-    <button id="displayTasksButton">Display Tasks</button>
-    <button id ="toggleAllButton">Toggle All</button>
+  <!--  <button id="displayTasksButton">Display Tasks</button> -->
+  <!--  <button id ="toggleAllButton">Toggle All</button> -->
+
+  <!-- Start to Refactor code to make it more readable -->
+
+  <div>
+   <button onclick="handlers.displayTasks()">Display Tasks</button>
+   <button onclick="handlers.toggleAll()">Toggle All</button>
+ </div>
+
+ <div>
+   <button onclick="handlers.addTask()">Add</button>
+   <input id="addTaskTextInput" type="text">
+ </div>
+
+  <div>
+   <button onclick="handlers.changeTask()">Change Task</button>
+   <input id="changeTodoPositionInput" type="number">
+   <input id="changeTodoTextInput" type="text">
+ </div>
+
+  <div>
+   <button onclick="handlers.deleteTask()">Delete</button>
+   <input id="deleteTaskPositionInput" type="number">
+ </div>
+
+  <div>
+   <button onclick="handlers.toggleCompleted()">Toggle Completed</button>
+   <input id="toggleCompletedPositionInput" type="number">
+ </div>
+
 
      <script src="script.js"></script>
   </body>
