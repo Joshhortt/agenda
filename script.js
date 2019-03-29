@@ -1,5 +1,10 @@
+
+// Refactor
 var taskList = {
   tasks: [],
+
+/*  Get rid of all this code here
+
   displayTasks: function()  {
     if (this.tasks.length === 0)  {
        console.log("your task list is empty!");
@@ -14,29 +19,30 @@ var taskList = {
       }
      }
   },
+ */
 
   addTask: function(taskText)  {
     this.tasks.push({
     taskText: taskText,
     completed: false
   });
-  this.displayTasks();
+ // this.displayTasks();
   },
 
   changeTask: function(position, taskText)  {
   this.tasks[position].taskText = taskText;
-  this.displayTasks();
+ // this.displayTasks();
   },
 
  deleteTask: function(position)  {
   this.tasks.splice(position, 1);
-  this.displayTasks();
+ // this.displayTasks();
   },
 
   toggleCompleted: function(position)  {
     var task = this.tasks[position];
     task.completed = !task.completed;
-    this.displayTasks();
+   // this.displayTasks();
   },
 
   toggleAll: function()  {
@@ -46,9 +52,9 @@ var taskList = {
         if (this.tasks[i].completed === true) {
         }
      }
-     if (completedTasks === totalTasks) {
-// Make everything "for" false
-     for (var i = 0; i < totalTasks; i++) {
+  if (completedTasks === totalTasks) {
+  //Make everything false
+  for (var i = 0; i < totalTasks; i++) {
         this.tasks[i].completed = false;
     }
    } else  {
@@ -56,51 +62,80 @@ var taskList = {
         this.tasks[i].completed = true;
      }
    }
+
+/* Delete this.displayTasks also, because it was only for testing in the console.
+
    this.displayTasks();
+*/
   }
 };
 
-/*
-var displayTasksButton = document.getElementById("displayTasksButton");
-var toggleAllButton = document.getElementById("toggleAllButton");
-
-displayTasksButton.addEventListener("click", function()  {
-  taskList.displayTasks();
-});
-
-toggleAllButton.addEventListener("click", function()  {
-  taskList.toggleAll();
-});
-*/
-// Refactoring code to make it more readable
 var handlers = {
-  displayTasks: function()  {
+
+/* Got rid of displayTasks button, and displayTasks handler aswell.
+
+    displayTasks: function()  {
     taskList.displayTasks();
   },
+*/
+
   toggleAll: function()  {
     taskList.toggleAll();
+    view.displayTasks();
   },
   addTask: function()  {
     var addTaskTextInput = document.getElementById("addTaskTextInput");
     taskList.addTask(addTaskTextInput.value);
     addTaskTextInput.value = "";
+    view.displayTasks();
   },
   changeTask: function()  {
-  var changeTaskPositionInput = document.getElementById("changeTaskPositionInput");
-  var changeTaskTextInput = document.getElementById("changeTaskTextInput");
-  taskList.changeTask(changeTaskPositionInput.valueAsNumber, changeTaskTextInput.value);
-
+    var changeTaskPositionInput = document.getElementById("changeTaskPositionInput");
+    var changeTaskTextInput = document.getElementById("changeTaskTextInput");
+    taskList.changeTask(changeTaskPositionInput.valueAsNumber, changeTaskTextInput.value);
     changeTaskPositionInput.value = "";
     changeTaskTextInput.value = "";
+    view.displayTasks();
   },
   deleteTask: function() {
     var deleteTaskPositionInput = document.getElementById("deleteTaskPositionInput");
     taskList.deleteTask(deleteTaskPositionInput.valueAsNumber);
     deleteTaskPositionInput.value = "";
+    view.displayTasks();
   },
     toggleCompleted: function() {
     var toggleCompletedPositionInput = document.getElementById("toggleCompletedPositionInput");
-    todoList.toggleCompleted(toggleCompletedPositionInput.valueAsNumber);
+    taskList.toggleCompleted(toggleCompletedPositionInput.valueAsNumber);
     toggleCompletedPositionInput.value = "";
+    view.displayTask();
+  }
+};
+// Refactor code!
+
+// Create a object
+var view = {
+  displayTasks: function()   {
+     var tasksUl = document.querySelector("ul");
+     tasksUl.innerHTML = "";
+     for (var i = 0; i < taskList.todos.length; i++)  {
+       var taskLi = document.createElement("li");
+// Here goes the variable
+       var task = taskList.tasks[i];
+// var taskTextWithCompletion = '';
+// if (taskCompleted === true) -- Created a variable above to reference if
+// task.completed is true
+// (x) taskText
+// else
+// () taskText
+// taskLi.textContent = taskTextWithCompletion;
+var taskTextWithCompletion = '';
+if (task.completed === true)  {
+  taskTextWithCompletion = '(x)' + task.todoText;
+} else  {
+  taskTextWithCompletion = '( )' + task.taskText;
+}
+       taskLi.textContent = taskTextWithCompletion;
+       tasksUl.appendChild(taskLi);
+     }
   }
 };
