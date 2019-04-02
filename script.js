@@ -1,141 +1,142 @@
-
-// Refactor
 var taskList = {
   tasks: [],
-
-/*  Get rid of all this code here
-
-  displayTasks: function()  {
-    if (this.tasks.length === 0)  {
-       console.log("your task list is empty!");
-     } else {
-      console.log("My Tasks:");
-      for (var i = 0 ; i < this.tasks.length; i++) {
-        if (this.tasks[i].completed === true) {
-         console.log("(x)", this.tasks[i].taskText);
-        } else  {
-         console.log("( )", this.tasks[i].taskText);
-       }
-      }
-     }
-  },
- */
-
-  addTask: function(taskText)  {
+  addTask: function(taskText) {
     this.tasks.push({
-    taskText: taskText,
-    completed: false
-  });
- // this.displayTasks();
+      taskText: taskText,
+      completed: false,
+    });
   },
-
-  changeTask: function(position, taskText)  {
-  this.tasks[position].taskText = taskText;
- // this.displayTasks();
+  changeTask: function(position, taskText) {
+    this.tasks[position].taskText = taskText;
   },
-
- deleteTask: function(position)  {
-  this.tasks.splice(position, 1);
- // this.displayTasks();
+  deleteTask: function(position) {
+    this.tasks.splice(position, 1);
   },
-
-  toggleCompleted: function(position)  {
+  toggleCompleted: function(position) {
     var task = this.tasks[position];
     task.completed = !task.completed;
-   // this.displayTasks();
   },
-
-  toggleAll: function()  {
+  toggleAll: function() {
     var totalTasks = this.tasks.length;
     var completedTasks = 0;
-     for (var i = 0 ; i < totalTasks; i++) {
-        if (this.tasks[i].completed === true) {
-        }
-     }
-  if (completedTasks === totalTasks) {
-  //Make everything false
-  for (var i = 0; i < totalTasks; i++) {
-        this.tasks[i].completed = false;
+
+    // Get number of completed tasks.
+    for (var i = 0; i < totalTasks; i++) {
+      if (this.tasks[i].completed === true) {
+        completedTasks++;
+      }
     }
-   } else  {
-     for (var i = 0; i < totalTasks; i++) {
+
+    // Case 1: If everything’s true, make everything false.
+    if (completedTasks === totalTasks) {
+      for (var i = 0; i < totalTasks; i++) {
+        this.tasks[i].completed = false;
+      }
+      // Case 2: Otherwise, make everything true.
+    } else {
+      for (var i = 0; i < totalTasks; i++) {
         this.tasks[i].completed = true;
-     }
-   }
-
-/* Delete this.displayTasks also, because it was only for testing in the console.
-
-   this.displayTasks();
-*/
-  }
+      }
+    }
+  },
 };
 
 var handlers = {
-
-/* Got rid of displayTasks button, and displayTasks handler aswell.
-
-    displayTasks: function()  {
-    taskList.displayTasks();
+  addTask: function() {
+    var addTaskTextInput = document.getElementById('addTaskTextInput');
+    taskList.addTask(addTaskTextInput.value);
+    addTaskTextInput.value = '';
+    view.displayTasks();
   },
-*/
+  changeTask: function() {
+    var changeTaskPositionInput = document.getElementById(
+      'changeTaskPositionInput'
+    );
+    var changeTaskTextInput = document.getElementById('changeTaskTextInput');
+    taskList.changeTask(
+      changeTaskPositionInput.valueAsNumber,
+      changeTaskTextInput.value
+    );
+    changeTaskPositionInput.value = '';
+    changeTaskTextInput.value = '';
+    view.displayTasks();
+  },
 
-  toggleAll: function()  {
+  // No need these lines under of code anymore
+  /*deleteTask: function() {
+var deleteTaskPositionInput = document('deleteTaskPositionInput');
+ taskList.deleteTask(deleteTaskPositionInput.valueAsNumber);
+ deleteTaskPositionInput.value = '';
+ view.displayTasks();
+*/
+  deleteTask: function(position) {
+    taskList.deleteTask(position);
+    view.displayTasks();
+  },
+  toggleCompleted: function() {
+    var toggleCompletedPositionInput = document.getElementById(
+      'toggleCompletedPositionInput'
+    );
+    taskList.toggleCompleted(toggleCompletedPositionInput.valueAsNumber);
+    toggleCompletedPositionInput.value = '';
+    view.displayTasks();
+  },
+  toggleAll: function() {
     taskList.toggleAll();
     view.displayTasks();
   },
-  addTask: function()  {
-    var addTaskTextInput = document.getElementById("addTaskTextInput");
-    taskList.addTask(addTaskTextInput.value);
-    addTaskTextInput.value = "";
-    view.displayTasks();
-  },
-  changeTask: function()  {
-    var changeTaskPositionInput = document.getElementById("changeTaskPositionInput");
-    var changeTaskTextInput = document.getElementById("changeTaskTextInput");
-    taskList.changeTask(changeTaskPositionInput.valueAsNumber, changeTaskTextInput.value);
-    changeTaskPositionInput.value = "";
-    changeTaskTextInput.value = "";
-    view.displayTasks();
-  },
-  deleteTask: function() {
-    var deleteTaskPositionInput = document.getElementById("deleteTaskPositionInput");
-    taskList.deleteTask(deleteTaskPositionInput.valueAsNumber);
-    deleteTaskPositionInput.value = "";
-    view.displayTasks();
-  },
-    toggleCompleted: function() {
-    var toggleCompletedPositionInput = document.getElementById("toggleCompletedPositionInput");
-    taskList.toggleCompleted(toggleCompletedPositionInput.valueAsNumber);
-    toggleCompletedPositionInput.value = "";
-    view.displayTask();
-  }
 };
-// Refactor code!
 
-// Create a object
 var view = {
-  displayTasks: function()   {
-     var tasksUl = document.querySelector("ul");
-     tasksUl.innerHTML = "";
-     for (var i = 0; i < taskList.todos.length; i++)  {
-       var taskLi = document.createElement("li");
-// Here goes the variable
-       var task = taskList.tasks[i];
-// var taskTextWithCompletion = '';
-// if (taskCompleted === true) -- Created a variable above to reference if
-// task.completed is true
-// (x) taskText
-// else
-// () taskText
-// taskLi.textContent = taskTextWithCompletion;
-var taskTextWithCompletion = '';
-if (task.completed === true)  {
-  taskTextWithCompletion = '(x)' + task.todoText;
-} else  {
-  taskTextWithCompletion = '( )' + task.taskText;
-}
-       taskLi.textContent = taskTextWithCompletion;
-       tasksUl.appendChild(taskLi);
-     }
-  }
+  displayTasks: function() {
+    var tasksUl = document.querySelector('ul');
+    tasksUl.innerHTML = '';
+    for (var i = 0; i < taskList.tasks.length; i++) {
+      var taskLi = document.createElement('li');
+      var task = taskList.tasks[i];
+      var taskTextWithCompletion = '';
+
+      if (task.completed === true) {
+        taskTextWithCompletion = '(x) ' + task.taskText;
+      } else {
+        taskTextWithCompletion = '( ) ' + task.taskText;
+      }
+
+      taskLi.id = i;
+      taskLi.textContent = taskTextWithCompletion;
+      // DeleteButton for each task
+      taskLi.appendChild(this.createDeleteButton());
+      tasksUl.appendChild(taskLi);
+    }
+  },
+/* This method could go inside 'var view = { ..'.
+   But the Functions are getting to Long, so add inside 'var view', but in the bottom.
+   */
+
+  createDeleteButton: function() {
+    var deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.className = 'deleteButton';
+    return deleteButton;
+  },
+
+  setUpEventListeners: function() {
+
+    var tasksUl = document.querySelector('ul');
+
+    tasksUl.addEventListener('click', function(event) {
+      console.log(event.target.parentNode.id);
+
+      // Get the element that was clicked
+      var elementClicked = event.target;
+
+      // Check if elementClicked is a delete buttton.
+      if (elementClicked.className === 'deleteButton') {
+        // Run handlers.deleteTask
+        handlers.deleteTask(parseInt(elementClicked.parentNode.id));
+      }
+    });
+  },
 };
+// To Run the setUpEventListener is necessary to add this code, otherwise the previous code won't run by itself.
+view.setUpEventListeners();
